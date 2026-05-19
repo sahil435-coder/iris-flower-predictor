@@ -1,0 +1,25 @@
+train: train/images
+val: valid/images
+test: test/images
+
+nc: 8
+
+names:
+  0: rose
+  1: iris
+  2: begonvil
+  3: ff
+  4: karahindiba
+  5: lale
+  6: papatya
+  7: zambak
+
+nc: 7
+names: ['begonvil', 'iris', 'karahindiba', 'lale', 'papatya', 'rose', 'zambak']
+
+roboflow:
+  workspace: walter-white-qlflc
+  project: walter-white-qlflc
+  version: dataset
+  license: Private
+  url: https://app.roboflow.com/walter-white-qlflc/walter-white-qlflc/dataset

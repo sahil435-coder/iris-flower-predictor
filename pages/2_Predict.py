@@ -1,19 +1,23 @@
 import streamlit as st
-import joblib
 import numpy as np
+import pandas as pd
 
-model = joblib.load("best_model.pkl")
+st.title("🌸 Iris Flower Prediction")
 
-st.title("🔮 Predict Iris Flower")
+st.subheader("Enter Flower Measurements")
 
-sepal_length = st.slider("Sepal Length", 4.0, 8.0)
-sepal_width = st.slider("Sepal Width", 2.0, 5.0)
-petal_length = st.slider("Petal Length", 1.0, 7.0)
-petal_width = st.slider("Petal Width", 0.1, 2.5)
+sepal_length = st.slider("Sepal Length", 0.0, 10.0, 5.0)
+sepal_width = st.slider("Sepal Width", 0.0, 10.0, 3.0)
+petal_length = st.slider("Petal Length", 0.0, 10.0, 4.0)
+petal_width = st.slider("Petal Width", 0.0, 10.0, 1.0)
 
-if st.button("Predict"):
-    data = np.array([[sepal_length, sepal_width, petal_length, petal_width]])
-    pred = model.predict(data)
+if st.button("Predict Flower"):
 
-    result = ["Setosa", "Versicolor", "Virginica"][pred[0]]
-    st.success(f"Prediction: {result}")
+    if petal_length < 2:
+        flower = "Setosa"
+    elif petal_length < 5:
+        flower = "Versicolor"
+    else:
+        flower = "Virginica"
+
+    st.success(f"Predicted Flower: {flower}")
