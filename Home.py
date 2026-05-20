@@ -68,7 +68,7 @@ def login():
     )
 
     st.markdown(
-        "<div class='sub-title'>Secure AI Powered Flower Detection Platform</div>",
+        "<div class='sub-title'>Secure Flower Detection Platform</div>",
         unsafe_allow_html=True
     )
 
@@ -190,13 +190,13 @@ def main_app():
 
     st.markdown("""
     <div class='main-title'>
-    🌸 AI Iris Flower Monitoring System
+    🌸 Iris Flower Monitoring System
     </div>
     """, unsafe_allow_html=True)
 
     st.markdown("""
     <div class='sub-title'>
-    Artificial Intelligence Powered Iris Species Detection Platform
+    Powered Iris Species Detection Platform
     </div>
     """, unsafe_allow_html=True)
 
@@ -207,7 +207,7 @@ def main_app():
     st.markdown("""
     <div class='glass-card'>
 
-    <h2>🌿 About the System</h2>
+    <h2>🌿 About Iris </h2>
 
     <p class='description-text'>
 
@@ -361,7 +361,7 @@ def main_app():
     st.markdown("""
     <div class='footer'>
 
-    🌿 AI + Nature + Computer Vision Intelligence 🌿
+    🌿 Nature + Computer Vision Intelligence 🌿
 
     </div>
     """, unsafe_allow_html=True)
