@@ -14,43 +14,46 @@ st.markdown("""
 .stApp {
     background: linear-gradient(
         135deg,
-        #232526,
-        #414345
+        #0f2027,
+        #203a43,
+        #2c5364
     );
     color: white;
 }
 
-.main-title {
-    font-size: 50px;
-    font-weight: bold;
+.arch-title {
     text-align: center;
+    font-size: 60px;
+    font-weight: bold;
     color: white;
-    margin-top: 20px;
+    margin-top: 30px;
 }
 
-.sub-title {
+.arch-subtitle {
     text-align: center;
-    font-size: 20px;
+    font-size: 24px;
     color: #d9faff;
     margin-bottom: 40px;
 }
 
 .arch-card {
     background: rgba(255,255,255,0.1);
-    padding: 25px;
+    padding: 30px;
     border-radius: 20px;
     backdrop-filter: blur(10px);
-    margin-bottom: 20px;
+    margin-bottom: 25px;
 }
 
-.arch-title {
+.arch-heading {
     font-size: 28px;
     font-weight: bold;
     color: #00ffd5;
+    margin-bottom: 15px;
 }
 
 .arch-text {
-    font-size: 18px;
+    font-size: 20px;
+    line-height: 1.7;
     color: white;
 }
 
@@ -59,93 +62,80 @@ st.markdown("""
 
 # TITLE
 st.markdown(
-    "<div class='main-title'>🧠 AI System Architecture</div>",
+    "<div class='arch-title'>🧠 AI System Architecture</div>",
     unsafe_allow_html=True
 )
 
-# SUBTITLE
 st.markdown(
-    "<div class='sub-title'>Complete AI Workflow & Technology Stack</div>",
+    "<div class='arch-subtitle'>Complete AI Workflow & Technology Stack</div>",
     unsafe_allow_html=True
 )
 
-# FIRST ROW
+# ROW 1
 col1, col2 = st.columns(2)
 
 with col1:
+    st.markdown("""
+    <div class="arch-card">
 
-    st.markdown(
-        '''
-        <div class="arch-card">
-            <div class="arch-title">
-                🌸 Image Upload
-            </div>
+    <div class="arch-heading">
+    🌸 Image Upload
+    </div>
 
-            <div class="arch-text">
-                User uploads iris flower image
-                through Streamlit interface.
-            </div>
-        </div>
-        ''',
-        unsafe_allow_html=True
-    )
+    <div class="arch-text">
+    User uploads iris flower image through Streamlit interface.
+    </div>
+
+    </div>
+    """, unsafe_allow_html=True)
 
 with col2:
+    st.markdown("""
+    <div class="arch-card">
 
-    st.markdown(
-        '''
-        <div class="arch-card">
-            <div class="arch-title">
-                🤖 YOLOv8 Detection
-            </div>
+    <div class="arch-heading">
+    🤖 YOLOv8 Detection
+    </div>
 
-            <div class="arch-text">
-                AI model processes image using
-                computer vision algorithms.
-            </div>
-        </div>
-        ''',
-        unsafe_allow_html=True
-    )
+    <div class="arch-text">
+    AI model processes image using computer vision algorithms.
+    </div>
 
-# SECOND ROW
+    </div>
+    """, unsafe_allow_html=True)
+
+# ROW 2
 col3, col4 = st.columns(2)
 
 with col3:
+    st.markdown("""
+    <div class="arch-card">
 
-    st.markdown(
-        '''
-        <div class="arch-card">
-            <div class="arch-title">
-                📊 Prediction Analytics
-            </div>
+    <div class="arch-heading">
+    📊 Prediction Analytics
+    </div>
 
-            <div class="arch-text">
-                Detection confidence and flower
-                classification results are generated.
-            </div>
-        </div>
-        ''',
-        unsafe_allow_html=True
-    )
+    <div class="arch-text">
+    System analyzes confidence score and classification accuracy.
+    </div>
+
+    </div>
+    """, unsafe_allow_html=True)
 
 with col4:
+    st.markdown("""
+    <div class="arch-card">
 
-    st.markdown(
-        '''
-        <div class="arch-card">
-            <div class="arch-title">
-                🌿 Intelligent Monitoring
-            </div>
+    <div class="arch-heading">
+    🌿 Intelligent Monitoring
+    </div>
 
-            <div class="arch-text">
-                AI system monitors and predicts
-                flower species intelligently.
-            </div>
-        </div>
-        ''',
-        unsafe_allow_html=True
-    )
+    <div class="arch-text">
+    Smart dashboard displays final flower monitoring results.
+    </div>
+
+    </div>
+    """, unsafe_allow_html=True)
 
 # TECHNOLOGY STACK
 st.markdown("## ⚙️ Technology Stack")
@@ -153,30 +143,25 @@ st.markdown("## ⚙️ Technology Stack")
 tech1, tech2, tech3, tech4 = st.columns(4)
 
 with tech1:
-    st.success("🐍 Python")
+    st.info("🐍 Python")
 
 with tech2:
-    st.success("🤖 YOLOv8")
+    st.info("🧠 YOLOv8")
 
 with tech3:
-    st.success("🌐 Streamlit")
+    st.info("🎨 Streamlit")
 
 with tech4:
-    st.success("👁️ OpenCV")
+    st.info("📷 OpenCV")
 
 # WORKFLOW
 st.markdown("## 🔄 AI Workflow")
 
-st.info("📸 Upload Image")
-st.info("🧠 YOLOv8 Processes Image")
-st.info("🌸 Flower Classification")
-st.info("📊 Display Prediction")
-st.info("🤖 Intelligent Monitoring")
-
-# FOOTER
-st.markdown("---")
-
-st.markdown(
-    "<center>🌿 Artificial Intelligence + Nature Monitoring System 🌿</center>",
-    unsafe_allow_html=True
-)
+st.success("""
+1️⃣ Upload Flower Image  
+2️⃣ Preprocess Image  
+3️⃣ Run YOLOv8 Detection  
+4️⃣ Analyze Flower Features  
+5️⃣ Generate Prediction Result  
+6️⃣ Display Intelligent Dashboard  
+""")

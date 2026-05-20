@@ -150,6 +150,9 @@ if uploaded_file is not None:
                 unsafe_allow_html=True
             )
 
+            # CONFIDENCE BAR
+            st.progress(float(confidence))
+
     else:
 
         st.error("No flower detected.")
@@ -161,37 +164,49 @@ st.markdown(
     """
     <div class='webcam-box'>
         <h2>🎥 Live Webcam Flower Detection</h2>
+
         <p>
-            Start your webcam and let YOLOv8 detect flowers
-            in real-time using Artificial Intelligence.
+            Start webcam and detect flowers in real-time
+            using Artificial Intelligence.
         </p>
     </div>
     """,
     unsafe_allow_html=True
 )
 
-run_webcam = st.checkbox("Enable Live Webcam Detection")
+# WEBCAM CONTROLS
+start_webcam = st.button(
+    "▶️ Start Webcam",
+    key="start_webcam_btn"
+)
+
+stop_webcam = st.button(
+    "⏹️ Stop Webcam",
+    key="stop_webcam_btn"
+)
 
 FRAME_WINDOW = st.image([])
 
 camera = None
 
-if run_webcam:
+# START CAMERA
+if start_webcam:
 
     camera = cv2.VideoCapture(0)
 
-    while run_webcam:
+    while True:
 
         success, frame = camera.read()
 
         if not success:
-            st.error("Failed to access webcam.")
+
+            st.error("Unable to access webcam.")
             break
 
         # YOLO DETECTION
         results = model.predict(frame)
 
-        # DRAW RESULTS
+        # DRAW DETECTIONS
         annotated_frame = results[0].plot()
 
         # DISPLAY FRAME
@@ -201,8 +216,8 @@ if run_webcam:
             use_container_width=True
         )
 
-        # STOP BUTTON
-        if st.button("Stop Webcam"):
+        # STOP CONDITION
+        if stop_webcam:
             break
 
     camera.release()
