@@ -10,7 +10,7 @@ df = pd.DataFrame(data.data, columns=data.feature_names)
 df['target'] = data.target
 
 # Basic info
-print("Shape:", df.shape)
+print("Shape:", df.shape)      
 print(df.describe())
 
 # Visualization 1
@@ -26,3 +26,9 @@ plt.xlabel("Petal Length")
 plt.ylabel("Petal Width")
 plt.title("Petal Length vs Width")
 plt.show()
+
+#visualization 
+plt.scatter(df["petal length (cm)"])
+
+#adding a virtualization
+plt.scatter(df)

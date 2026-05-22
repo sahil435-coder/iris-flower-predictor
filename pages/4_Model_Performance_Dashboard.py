@@ -2,6 +2,26 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 
+# =========================================================
+# HIDE ADMIN PANEL FROM SIDEBAR
+# =========================================================
+
+hide_pages = """
+<style>
+
+/* Hide last page from sidebar */
+[data-testid="stSidebarNav"] ul li:last-child {
+    display: none;
+}
+
+</style>
+"""
+
+st.markdown(
+    hide_pages,
+    unsafe_allow_html=True
+)
+
 # PAGE CONFIG
 st.set_page_config(
     page_title="Model Performance Dashboard",

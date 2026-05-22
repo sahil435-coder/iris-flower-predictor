@@ -2,14 +2,33 @@ import streamlit as st
 from ultralytics import YOLO
 from PIL import Image
 import numpy as np
-import cv2
+
+# =========================================================
+# HIDE ADMIN PANEL FROM SIDEBAR
+# =========================================================
+
+hide_pages = """
+<style>
+
+/* Hide last page from sidebar */
+[data-testid="stSidebarNav"] ul li:last-child {
+    display: none;
+}
+
+</style>
+"""
+
+st.markdown(
+    hide_pages,
+    unsafe_allow_html=True
+)
 
 # =========================================================
 # PAGE CONFIG
 # =========================================================
 
 st.set_page_config(
-    page_title="Iris Flower Detection",
+    page_title="Flower Detection",
     page_icon="🌸",
     layout="wide"
 )
@@ -18,7 +37,7 @@ st.set_page_config(
 # LOAD MODEL
 # =========================================================
 
-model = YOLO("yolov8n.pt")
+model = YOLO("yolov8_model/best.pt")
 
 # =========================================================
 # CUSTOM CSS
@@ -52,17 +71,10 @@ st.markdown("""
 }
 
 .glass-card {
-    background: rgba(255,255,255,0.1);
-    padding: 25px;
+    background: rgba(255,255,255,0.08);
+    padding: 30px;
     border-radius: 20px;
     backdrop-filter: blur(10px);
-    margin-top: 20px;
-}
-
-.result-box {
-    background: rgba(255,255,255,0.08);
-    padding: 20px;
-    border-radius: 20px;
     margin-top: 20px;
 }
 
@@ -70,7 +82,7 @@ st.markdown("""
     text-align: center;
     color: white;
     font-size: 18px;
-    margin-top: 30px;
+    margin-top: 50px;
 }
 
 </style>
@@ -81,14 +93,14 @@ st.markdown("""
 # =========================================================
 
 st.markdown("""
-<div class='main-title'>
-🌸 Iris Flower Detection
+<div class="main-title">
+🌸 Flower Detection System
 </div>
 """, unsafe_allow_html=True)
 
 st.markdown("""
-<div class='sub-title'>
-
+<div class="sub-title">
+Upload Flower Images And Detect Species Instantly
 </div>
 """, unsafe_allow_html=True)
 
@@ -97,19 +109,22 @@ st.markdown("""
 # =========================================================
 
 st.markdown("""
-<div class='glass-card'>
+<div class="glass-card">
 
-<h2>🌿 About Iris Detection</h2>
+<h2>🌿 About Detection</h2>
 
-<p>
+<p style="font-size:18px; line-height:1.8;">
 
-This module uses Artificial Intelligence and YOLOv8
-Computer Vision algorithms to detect Iris flower
-species from uploaded images and live webcam streams.
+This module uses YOLOv8 computer vision technology
+to identify and classify flower species from uploaded images.
 
-The system performs intelligent object detection,
-flower classification, and real-time prediction
-visualization.
+The system performs:
+<ul>
+<li>🌸 Flower Detection</li>
+<li>📸 Image Analysis</li>
+<li>🎯 Confidence Scoring</li>
+<li>📊 Real-Time Prediction Visualization</li>
+</ul>
 
 </p>
 
@@ -122,12 +137,16 @@ visualization.
 
 st.markdown("---")
 
-st.markdown("## 📸 Upload Iris Flower Image")
+st.markdown("## 📸 Upload Flower Image")
 
 uploaded_file = st.file_uploader(
-    "Upload Iris Flower",
+    "Choose Flower Image",
     type=["jpg", "jpeg", "png"]
 )
+
+# =========================================================
+# DETECTION
+# =========================================================
 
 if uploaded_file is not None:
 
@@ -135,17 +154,25 @@ if uploaded_file is not None:
 
     col1, col2 = st.columns(2)
 
+    # =====================================================
+    # ORIGINAL IMAGE
+    # =====================================================
+
     with col1:
+
+        st.markdown("### 🌿 Uploaded Image")
 
         st.image(
             image,
-            caption="Uploaded Iris Image",
             use_container_width=True
         )
 
     image_np = np.array(image)
 
-    # AI PREDICTION
+    # =====================================================
+    # MODEL PREDICTION
+    # =====================================================
+
     results = model.predict(
         image_np,
         conf=0.25
@@ -153,22 +180,40 @@ if uploaded_file is not None:
 
     annotated_frame = results[0].plot()
 
+    # =====================================================
+    # DETECTED IMAGE
+    # =====================================================
+
     with col2:
+
+        st.markdown("### 🎯 Detection Result")
 
         st.image(
             annotated_frame,
-            caption="AI Detection Result",
             use_container_width=True
         )
 
-    # DETECTION RESULTS
-    st.markdown("## 🤖 Detection Results")
+    # =====================================================
+    # RESULTS SECTION
+    # =====================================================
+
+    st.markdown("---")
+
+    st.markdown("## 📊 Detection Results")
 
     boxes = results[0].boxes
 
+    # =====================================================
+    # DETECTIONS FOUND
+    # =====================================================
+
     if len(boxes) > 0:
 
-        st.success("🌸 Iris Flower Detected Successfully")
+        st.success("🌸 Flower Detected Successfully")
+
+        total_detections = len(boxes)
+
+        st.info(f"📌 Total Detections: {total_detections}")
 
         for box in boxes:
 
@@ -178,56 +223,19 @@ if uploaded_file is not None:
 
             flower_name = model.names[class_id]
 
-            st.markdown(
-                f"""
-                <div class='result-box'>
-                    <h3>🌸 Flower: {flower_name}</h3>
-                    <h4>🎯 Confidence: {confidence:.2f}</h4>
-                </div>
-                """,
-                unsafe_allow_html=True
-            )
+            st.success(f"🌸 Flower Name: {flower_name}")
 
-            st.progress(float(confidence))
+            st.info(f"🎯 Confidence Score: {confidence:.2f}")
+
+            st.progress(confidence)
+
+    # =====================================================
+    # NO DETECTION
+    # =====================================================
 
     else:
 
-        st.error("❌ No Iris Flower Detected")
-
-# =========================================================
-# WEBCAM DETECTION
-# =========================================================
-
-st.markdown("---")
-
-st.markdown("## 🎥 Live Iris Webcam Detection")
-
-start_webcam = st.button("▶️ Start Webcam")
-
-FRAME_WINDOW = st.image([])
-
-if start_webcam:
-
-    camera = cv2.VideoCapture(0)
-
-    while camera.isOpened():
-
-        success, frame = camera.read()
-
-        if not success:
-            break
-
-        results = model.predict(frame)
-
-        annotated_frame = results[0].plot()
-
-        FRAME_WINDOW.image(
-            annotated_frame,
-            channels="BGR",
-            use_container_width=True
-        )
-
-    camera.release()
+        st.error("❌ No Flower Detected")
 
 # =========================================================
 # FOOTER
@@ -236,9 +244,9 @@ if start_webcam:
 st.markdown("---")
 
 st.markdown("""
-<div class='footer'>
+<div class="footer">
 
-🌿 AI + Computer Vision Iris Intelligence 🌿
+🌿 Flower Detection & Computer Vision Platform 🌿
 
 </div>
 """, unsafe_allow_html=True)
